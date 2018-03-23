@@ -1,31 +1,18 @@
 
 import java.awt.*;
-import java.awt.print.Book;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.PageRanges;
-import javax.print.attribute.standard.Sides;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.apache.pdfbox.pdmodel.interactive.viewerpreferences.PDViewerPreferences;
-import org.apache.pdfbox.printing.PDFPageable;
-import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 public final class ReadPdf {
 
     public static Map<String, String> readPropertyNamesFromPdfs(String pdfsPath) {
+        java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.SEVERE);
+
         File folder = new File(pdfsPath);
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles == null) {
@@ -61,6 +48,8 @@ public final class ReadPdf {
 
                     // TODO: include second line if it contains property name
                 } catch (IOException e) {
+                    System.out.println("Damn... looks like there was an issue reading from one of the pdf files. " +
+                            "Call me and tell me to look at ReadPdf.java");
                     e.printStackTrace();
                 } finally {
                     if (document != null) {

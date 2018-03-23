@@ -32,6 +32,8 @@ public class ExcelToCsv {
     }
 
     public static void excelToCsv(String excelFilePath) {
+        java.util.logging.Logger.getLogger("org.apache").setLevel(java.util.logging.Level.OFF);
+
         InputStream inp = null;
         try {
             inp = new FileInputStream(excelFilePath); //src/main/resources/sample_excel.xlsx
@@ -39,16 +41,17 @@ public class ExcelToCsv {
 
             StringBuilder strBuilder = new StringBuilder();
             for(int i=0;i<wb.getNumberOfSheets();i++) {
-                System.out.println(wb.getSheetAt(i).getSheetName());
                 strBuilder.append(echoAsCSV(wb.getSheetAt(i)));
             }
             output(strBuilder.toString());
         } catch (InvalidFormatException | IOException ex) {
+            System.out.println("Looks like the excel file you provided is garbage. Get wit it");
             Logger.getLogger(ExcelToCsv.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 inp.close();
             } catch (IOException ex) {
+                System.out.println("Looks like the excel file you provided is garbage. Get wit it");
                 Logger.getLogger(ExcelToCsv.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

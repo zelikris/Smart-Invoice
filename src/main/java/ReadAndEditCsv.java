@@ -25,6 +25,14 @@ public class ReadAndEditCsv {
             List<String[]> records = new ArrayList<>();
             CSVWriter writer = new CSVWriter(new FileWriter(PATH));
 
+            String[] headerRow = new String[5];
+            headerRow[0] = "INV. DATE";
+            headerRow[1] = "INVOICE#";
+            headerRow[2] = "P.O.#";
+            headerRow[3] = "INV. AMOUNT";
+            headerRow[4] = "PROPERTY NAME";
+            records.add(headerRow);
+
             for (CSVRecord csvRecord : csvRecords) {
                 String[] row = new String[5];
 
@@ -50,6 +58,8 @@ public class ReadAndEditCsv {
             writer.writeAll(records);
             writer.close();
         } catch (IOException e) {
+            System.out.println("Looks like there was an issue with the file I'm trying to output.");
+            System.out.println("Call me and tell me to look at ReadAndEditCsv");
             e.printStackTrace();
         }
     }

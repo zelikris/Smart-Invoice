@@ -1,21 +1,21 @@
-import java.util.List;
 import java.util.Map;
 
 public class Runner {
 
     public static void main(String[] args) {
-        // read invoiceNum from file names
+        if (args.length != 2) {
+            System.out.println("Follow this format dude: ");
+            System.out.println("java -jar smart-invoice.jar <folder with all invoice pdfs> <excel file>");
+            System.exit(1);
+        }
         String invoicesDir = args[0];
-        List<String> invoiceNums = ReadInvoiceFromFileName.readInvoiceNumsFromFilenames(invoicesDir);
-
-        // read property name from pdf
-        Map<String, String> invoicesToPropertyNames = ReadPdf.readPropertyNamesFromPdfs(invoicesDir);
-
-        // convert .xlsx to .csv
         String excelPath = args[1];
-        ExcelToCsv.excelToCsv(excelPath);
 
-        // insert property name in csv
+        // read invoiceNum and property name from pdf
+        Map<String, String> invoicesToPropertyNames = ReadPdf.readPropertyNamesFromPdfs(invoicesDir);
+        ExcelToCsv.excelToCsv(excelPath);
         ReadAndEditCsv.editCsv(invoicesToPropertyNames);
+
+        System.out.println("Done!");
     }
 }
