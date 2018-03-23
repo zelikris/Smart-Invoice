@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcelToCsv {
 
-    public static String echoAsCSV(Sheet sheet) {
+    private static String echoAsCSV(Sheet sheet) {
         Row row = null;
         StringBuilder strBuilder = new StringBuilder();
         for (int i = 0; i < sheet.getLastRowNum(); i++) {
@@ -25,19 +25,16 @@ public class ExcelToCsv {
         return strBuilder.toString();
     }
 
-    public static void output(String toPrint) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("test.csv"));
+    private static void output(String toPrint) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("result.csv"));
         writer.write(toPrint);
         writer.close();
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    public static void excelToCsv(String excelFilePath) {
         InputStream inp = null;
         try {
-            inp = new FileInputStream("src/main/resources/sample_excel.xlsx");
+            inp = new FileInputStream(excelFilePath); //src/main/resources/sample_excel.xlsx
             Workbook wb = WorkbookFactory.create(inp);
 
             StringBuilder strBuilder = new StringBuilder();
@@ -46,11 +43,7 @@ public class ExcelToCsv {
                 strBuilder.append(echoAsCSV(wb.getSheetAt(i)));
             }
             output(strBuilder.toString());
-        } catch (InvalidFormatException ex) {
-            Logger.getLogger(ExcelToCsv.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ExcelToCsv.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (InvalidFormatException | IOException ex) {
             Logger.getLogger(ExcelToCsv.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
