@@ -16,7 +16,7 @@ public class ReadAndEditCsv {
     public static void editCsv(Map<String, String> invoiceToProperty) {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(PATH));
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL
                         .withFirstRecordAsHeader()
                         .withIgnoreHeaderCase()
                         .withTrim())
@@ -58,8 +58,9 @@ public class ReadAndEditCsv {
             writer.writeAll(records);
             writer.close();
         } catch (IOException e) {
+            System.out.println("\n======================READ THIS=======================");
             System.out.println("Looks like there was an issue with the file I'm trying to output.");
-            System.out.println("Call me and tell me to look at ReadAndEditCsv");
+            System.out.println("\n======================READ THIS=======================\n");
             e.printStackTrace();
         }
     }
